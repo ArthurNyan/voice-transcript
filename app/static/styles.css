@@ -1,0 +1,132 @@
+:root {
+  color-scheme: light;
+  --bg: #f4efe7;
+  --surface: rgba(255, 251, 247, 0.85);
+  --ink: #1f1c19;
+  --muted: #645b52;
+  --accent: #0f766e;
+  --accent-strong: #115e59;
+  --border: rgba(31, 28, 25, 0.08);
+  --shadow: 0 20px 60px rgba(64, 46, 24, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(180, 83, 9, 0.16), transparent 22%),
+    linear-gradient(180deg, #fbf7f1 0%, var(--bg) 100%);
+}
+
+.page {
+  width: min(920px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0 72px;
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 12ch;
+  font-size: clamp(2.5rem, 6vw, 4.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.eyebrow,
+.lede,
+.status {
+  color: var(--muted);
+}
+
+.eyebrow {
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+}
+
+.lede {
+  max-width: 44rem;
+  font-size: 1.05rem;
+}
+
+.panel {
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+}
+
+.actions,
+.result-header,
+.result-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.result-header {
+  justify-content: space-between;
+}
+
+button,
+.file-picker span {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font: inherit;
+  cursor: pointer;
+  color: white;
+  background: var(--accent);
+  transition: transform 120ms ease, background 120ms ease, opacity 120ms ease;
+}
+
+button:hover,
+.file-picker span:hover {
+  transform: translateY(-1px);
+  background: var(--accent-strong);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
+.file-picker input {
+  display: none;
+}
+
+textarea {
+  width: 100%;
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  resize: vertical;
+  font: inherit;
+  line-height: 1.55;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 720px) {
+  .page {
+    width: min(100% - 20px, 920px);
+    padding-top: 28px;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Voice Transcript</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">Русская транскрибация</p>
+        <h1>Запишите голос или загрузите аудио и получите текст</h1>
+        <p class="lede">
+          Локальное приложение для macOS на FastAPI и faster-whisper.
+        </p>
+      </section>
+
+      <section class="panel">
+        <div class="actions">
+          <button id="recordButton" type="button">Начать запись</button>
+          <label class="file-picker">
+            <input id="fileInput" type="file" accept=".webm,.wav,.mp3,.m4a,.mp4,.mpeg,audio/*" />
+            <span>Выбрать файл</span>
+          </label>
+        </div>
+        <p id="status" class="status">Готово к записи или загрузке файла.</p>
+      </section>
+
+      <section class="panel">
+        <div class="result-header">
+          <h2>Результат</h2>
+          <div class="result-actions">
+            <button id="copyButton" type="button" disabled>Скопировать</button>
+            <button id="exportTxtButton" type="button" disabled>Экспорт TXT</button>
+            <button id="exportJsonButton" type="button" disabled>Экспорт JSON</button>
+          </div>
+        </div>
+        <textarea id="resultText" rows="14" readonly placeholder="Здесь появится расшифровка"></textarea>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

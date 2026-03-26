@@ -1,0 +1,59 @@
+Metadata-Version: 2.4
+Name: voice-transcript
+Version: 0.1.0
+Summary: Local macOS web app for Russian voice transcription
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi<1.0.0,>=0.115.0
+Requires-Dist: uvicorn[standard]<1.0.0,>=0.30.0
+Requires-Dist: python-multipart<1.0.0,>=0.0.9
+Requires-Dist: faster-whisper<2.0.0,>=1.1.0
+Provides-Extra: dev
+Requires-Dist: httpx<1.0.0,>=0.27.0; extra == "dev"
+Requires-Dist: pytest<9.0.0,>=8.3.0; extra == "dev"
+
+# Voice Transcript
+
+Локальное веб-приложение для macOS, которое принимает запись голоса или аудиофайл и транскрибирует русскую речь в текст через `faster-whisper`.
+
+## Возможности
+
+- запись с микрофона в браузере;
+- загрузка аудиофайлов;
+- транскрибация на русском языке;
+- экспорт результата в `TXT` и `JSON`.
+
+## Требования
+
+- Python 3.9+
+- `ffmpeg`
+
+Установка `ffmpeg` на macOS:
+
+```bash
+brew install ffmpeg
+```
+
+## Запуск
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+uvicorn app.main:app --reload
+```
+
+После запуска откройте [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+## Конфигурация
+
+Сейчас приложение использует дефолтную модель `small` и русский язык `ru`.
+Следующим шагом можно вынести конфигурацию через переменные окружения без изменения API.
+
+Поддерживаемые переменные окружения:
+
+- `WHISPER_MODEL_SIZE` — размер модели, по умолчанию `small`
+- `WHISPER_COMPUTE_TYPE` — тип вычислений для `faster-whisper`, по умолчанию `default`
+- `TRANSCRIPT_LANGUAGE` — язык транскрибации, по умолчанию `ru`
+- `TEMP_DIR` — директория для временных файлов, по умолчанию `tmp`
+- `MAX_UPLOAD_SIZE_MB` — лимит размера загружаемого файла, по умолчанию `100`
