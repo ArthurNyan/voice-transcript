@@ -4,7 +4,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    HF_HOME=/data/huggingface
+    HF_HOME=/data/huggingface \
+    WHISPER_MODEL_SIZE=small \
+    WHISPER_COMPUTE_TYPE=int8
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ffmpeg \
