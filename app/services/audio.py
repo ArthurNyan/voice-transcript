@@ -80,6 +80,51 @@ class AudioProcessor:
 
         return normalized_path, self.get_duration(normalized_path)
 
+    def validate_duration(self, source_path: Path) -> float:
+        duration_seconds = self.get_duration(source_path)
+        max_duration_seconds = self.settings.max_audio_duration_minutes * 60
+
+        if duration_seconds and duration_seconds > max_duration_seconds:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=(
+                    "Аудио слишком длинное для синхронной обработки. "
+                    f"Максимум: {self.settings.max_audio_duration_minutes} минут."
+                ),
+            )
+
+        return duration_seconds
+
+    def split_normalized_audio(
+        self,
+        source_path: Path,
+        chunk_duration_seconds: int,
+    ) -> list[tuple[Path, float]]:
+        self.settings.temp_dir.mkdir(parents=True, exist_ok=True)
+        chunk_pattern = self.settings.temp_dir / f"{source_path.stem}-chunk-%03d.wav"
+        command = [
+            "ffmpeg",
+            "-y",
+            "-i",
+            str(source_path),
+            "-f",
+            "segment",
+            "-segment_time",
+            str(chunk_duration_seconds),
+            "-c",
+            "copy",
+            str(chunk_pattern),
+        ]
+        process = subprocess.run(command, capture_output=True, text=True)
+        if process.returncode != 0:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Не удалось разбить аудио на части.",
+            )
+
+        chunks = sorted(self.settings.temp_dir.glob(f"{source_path.stem}-chunk-*.wav"))
+        return [(chunk, self.get_duration(chunk)) for chunk in chunks]
+
     def get_duration(self, source_path: Path) -> float:
         if shutil.which("ffprobe") is None:
             return 0.0

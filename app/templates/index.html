@@ -23,8 +23,28 @@
             <input id="fileInput" type="file" accept=".webm,.wav,.mp3,.m4a,.mp4,.mpeg,audio/*" />
             <span>Выбрать файл</span>
           </label>
+          <button id="resetJobButton" type="button" class="secondary">Сбросить задачу</button>
+          <button id="clearJobsButton" type="button" class="secondary">Очистить все</button>
         </div>
         <p id="status" class="status">Готово к записи или загрузке файла.</p>
+        <div id="progressPanel" class="progress-panel hidden" aria-live="polite">
+          <div class="progress-meta">
+            <strong id="progressLabel">Ожидание</strong>
+            <span id="progressValue">0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="result-header">
+          <h2>Задачи</h2>
+        </div>
+        <div id="jobsList" class="jobs-list">
+          <p class="status">Список задач пока пуст.</p>
+        </div>
       </section>
 
       <section class="panel">
